@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jotahdev.hire_hub.modules.candidate.CandidateEntity;
-import com.jotahdev.hire_hub.modules.candidate.CandidateRepository;
-import com.jotahdev.hire_hub.modules.candidate.UserFoundException;
 import com.jotahdev.hire_hub.modules.candidate.useCases.CreateCandidateUseCase;
 
 import jakarta.validation.Valid;
