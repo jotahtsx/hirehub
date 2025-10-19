@@ -35,6 +35,5 @@ public class CandidateEntity {
     @Size(max = 500, message = "A descrição deve ter no máximo {max} caracteres.")
     private String description;
 
-    @Size(max = 1000, message = "O currículo deve ter no máximo {max} caracteres.")
     private String resume;
 }
