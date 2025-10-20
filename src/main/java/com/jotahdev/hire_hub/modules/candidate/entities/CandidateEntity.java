@@ -1,9 +1,8 @@
-package com.jotahdev.hire_hub.modules.candidate;
+package com.jotahdev.hire_hub.modules.candidate.entities;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.*;

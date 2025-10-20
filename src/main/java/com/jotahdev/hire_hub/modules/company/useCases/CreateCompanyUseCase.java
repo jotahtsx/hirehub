@@ -13,18 +13,21 @@ public class CreateCompanyUseCase {
     @Autowired
     private CompanyRepository companyRepository;
 
-
     public CompanyEntity execute(CompanyEntity companyEntity) {
 
-        this.companyRepository
-        .findByUsernameOrEmail(companyEntity.getUsername(), companyEntity.getEmail())
-        .ifPresent((user) -> {
-            throw new UserFoundException();
-        });
+        // Valida username duplicado
+        companyRepository.findByUsernameOrEmail(companyEntity.getUsername(), companyEntity.getUsername())
+                .ifPresent(existingUser -> {
+                    throw new UserFoundException("Escolha outro nome de usuário, este já está em uso.");
+                });
 
-        return this.companyRepository.save(companyEntity);
+        // Valida email duplicado
+        companyRepository.findByEmail(companyEntity.getEmail())
+                .ifPresent(existingUser -> {
+                    throw new UserFoundException("Este e-mail já está cadastrado. Tente outro.");
+                });
+
+        // Salva se estiver tudo certo
+        return companyRepository.save(companyEntity);
     }
-
-
-
 }

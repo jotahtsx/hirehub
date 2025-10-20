@@ -35,6 +35,7 @@ public class CompanyEntity {
 
     @NotBlank(message = "O e-mail é obrigatório.")
     @Email(message = "Insira um e-mail válido.")
+    @Column(unique = true)
     private String email;
 
     @NotBlank(message = "A senha é obrigatória.")
