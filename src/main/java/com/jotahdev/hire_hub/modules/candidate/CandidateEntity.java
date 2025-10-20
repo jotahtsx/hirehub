@@ -59,8 +59,6 @@ public class CandidateEntity {
     @Column(name = "resume_path")
     private String resume;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
