@@ -1,72 +1,73 @@
 package com.jotahdev.hire_hub.modules.company.entities;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
 
-@Data
-@Entity(name = "company")
+@Entity
+@Table(name = "companies")
 public class CompanyEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue
     private UUID id;
 
-    @NotBlank(message = "O nome de usuário é obrigatório.")
-    @Size(min = 3, max = 20, message = "O nome de usuário deve ter entre {min} e {max} caracteres.")
-    @Pattern(
-        regexp = "^[a-zA-Z0-9._]+$",
-        message = "O nome de usuário pode conter apenas letras, números, pontos e underlines, sem espaços."
-    )
+    @NotBlank(message = "O Usuário da empresa é obrigatório.")
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @NotBlank(message = "O e-mail é obrigatório.")
-    @Email(message = "Insira um e-mail válido.")
-    @Column(unique = true)
-    private String email;
-
-    @NotBlank(message = "A senha é obrigatória.")
-    @Size(min = 8, max = 20, message = "A senha deve ter entre {min} e {max} caracteres.")
+    @NotBlank(message = "A Senha é obrigatória.")
+    @Column(nullable = false)
     private String password;
 
-    @Pattern(
-        regexp = "^(https?:\\/\\/)?([\\w\\-])+\\.([\\w\\-])+([\\w\\-\\./?%&=]*)?$",
-        message = "A URL deve ser válida."
-    )
+    @NotBlank(message = "O Email é obrigatório.")
+    @Email(message = "O Email inválido.")
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @NotBlank(message = "O Nome é obrigatório.")
+    private String name;
+
+    @NotBlank(message = "A URL é obrigatória")
+    @Column(unique = true, nullable = false)
     private String url;
 
     @NotBlank(message = "O CNPJ é obrigatório.")
-    @Pattern(
-        regexp = "^[0-9]{14}$",
-        message = "O CNPJ deve conter 14 dígitos numéricos, sem pontos ou traços."
-    )
+    @Size(min = 14, max = 14, message = "O CNPJ deve ter 14 dígitos sem pontuação")
+    @Column(unique = true, nullable = false)
     private String taxId;
 
-    @NotBlank(message = "O nome da empresa é obrigatório.")
-    @Size(min = 3, max = 100, message = "O nome da empresa deve ter entre {min} e {max} caracteres.")
-    private String name;
-
-    @Size(max = 500, message = "A descrição deve ter no máximo {max} caracteres.")
     private String description;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    // ======== GETTERS E SETTERS ========
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getUrl() { return url; }
+    public void setUrl(String url) { this.url = url; }
+
+    public String getTaxId() { return taxId; }
+    public void setTaxId(String taxId) { this.taxId = taxId; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 }
