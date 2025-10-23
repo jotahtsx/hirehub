@@ -1,5 +1,8 @@
 package com.jotahdev.hire_hub.modules.company.useCases;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -41,8 +44,11 @@ public class AuthCompanyUseCase {
         
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         return JWT.create()
-                .withIssuer("hirehub")
-                .withSubject(company.getId().toString())
-                .sign(algorithm);
+            .withIssuer("hirehub")
+            .withSubject(company.getId().toString())
+            .withClaim("username", company.getUsername())
+            .withClaim("email", company.getEmail())
+            .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
+            .sign(algorithm);
     }
 }
