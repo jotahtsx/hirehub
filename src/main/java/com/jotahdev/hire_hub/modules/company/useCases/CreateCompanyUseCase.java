@@ -19,29 +19,31 @@ public class CreateCompanyUseCase {
 
     public CompanyEntity execute(CompanyEntity companyEntity) {
 
-        // 🔹 Valida se já existe empresa com o mesmo username
         companyRepository.findByUsername(companyEntity.getUsername())
                 .ifPresent(existingUser -> {
                     throw new UserFoundException("Escolha outro nome de usuário, este já está em uso.");
                 });
 
-        // 🔹 Valida se já existe empresa com o mesmo email
         companyRepository.findByEmail(companyEntity.getEmail())
                 .ifPresent(existingUser -> {
                     throw new UserFoundException("Este e-mail já está cadastrado. Tente outro.");
                 });
 
-        // 🔹 Valida se já existe empresa com o mesmo CNPJ
         companyRepository.findByTaxId(companyEntity.getTaxId())
                 .ifPresent(existingCompany -> {
                     throw new UserFoundException("Este CNPJ já está cadastrado. Tente outro.");
                 });
 
-        // 🔹 Criptografa a senha antes de salvar
+        companyRepository.findByUrl(companyEntity.getUrl())
+                .ifPresent(existingCompany -> {
+                    throw new UserFoundException("Esta URL já está cadastrada. Tente outra.");
+                });
+
+        // Criptografa a senha antes de salvar
         String encryptedPassword = passwordEncoder.encode(companyEntity.getPassword());
         companyEntity.setPassword(encryptedPassword);
 
-        // 🔹 Salva no banco e retorna
+        // Salva no banco e retorna
         return companyRepository.save(companyEntity);
     }
 }
