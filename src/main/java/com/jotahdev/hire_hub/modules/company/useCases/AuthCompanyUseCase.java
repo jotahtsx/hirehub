@@ -49,6 +49,6 @@ public class AuthCompanyUseCase {
             .withClaim("username", company.getUsername())
             .withClaim("email", company.getEmail())
             .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
-            .sign(algorithm);
+            .sign(algorithm); 
     }
 }
